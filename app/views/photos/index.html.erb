@@ -18,21 +18,33 @@
           </div>
           <div class = "panel-body">
             <a href = "/photos/<%= photo.id %>"><img src = "<%= photo.image %>" class = "img-responsive"></a>
+            <p>
+              <% usernames = [] %>
+              <% photo.likes.each do |like| %>
+              <% usernames.push(like.user.username) %>
+              <% end %>
+              <% if  usernames.count == 1%>
+              <%= usernames.to_sentence %> likes this
+              <% elsif usernames.count == 0 %>
+              <% else  %>
+              <%= usernames.to_sentence %> like this
+              <% end %>
+            </p>
             <ul class="media-list">
               <% photo.comments.each do |comment| %>
               <li class="media">
                 <div class="media-body">
-                  <h6 class="media-heading"><a href="/users/<%= comment.user_id %>"><%= comment.user.username%> <small><%= time_ago_in_words(comment.created_at)%> ago</small>
-                  </a>
-                </h6>
-                <%= comment.body %>
-              </div>
-            </li>
-            <% end %>
-          </ul>
+                  <h6 class="media-heading"><a href="/users/<%= comment.user_id %>"><%= comment.user.username%>  </a><small><%= time_ago_in_words(comment.created_at)%> ago</small>
+
+                  </h6>
+                  <%= comment.body %>
+                </div>
+              </li>
+              <% end %>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
+    <% end %>
   </div>
-  <% end %>
-</div>
