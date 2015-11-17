@@ -18,10 +18,22 @@
           </div>
           <div class = "panel-body">
             <a href = "/photos/<%= photo.id %>"><img src = "<%= photo.image %>" class = "img-responsive"></a>
-          </div>
+            <ul class="media-list">
+              <% photo.comments.each do |comment| %>
+              <li class="media">
+                <div class="media-body">
+                  <h6 class="media-heading"><a href="/users/<%= comment.user_id %>"><%= comment.user.username%> <small><%= time_ago_in_words(comment.created_at)%> ago</small>
+                  </a>
+                </h6>
+                <%= comment.body %>
+              </div>
+            </li>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>
-    <% end %>
   </div>
+  <% end %>
+</div>
 
