@@ -1,4 +1,9 @@
 class PhotosController < ApplicationController
+
+  require 'action_view'
+  require 'action_view/helpers'
+  include ActionView::Helpers::DateHelper
+
   def index
     @photos = Photo.all
   end

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root "users#showlikes"
+  root "photos#index"
 
   # Routes for the Comment resource:
   # CREATE
