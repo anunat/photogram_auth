@@ -11,47 +11,91 @@
         <div class = "panel-body">
           <a href = "/photos/<%= @photo.id %>"><img src = "<%= @photo.image %>" class = "img-responsive"></a>
           <p>
-            <% usernames = [] %>
-            <% @photo.likes.each do |like| %>
-            <% usernames.push(like.user.username) %>
-            <% end %>
-            <% if  usernames.count == 1%>
-            <%= usernames.to_sentence %> likes this
-            <% elsif usernames.count == 0 %>
-            <% else  %>
-            <%= usernames.to_sentence %> like this
-            <% end %>
-          </p>
-          <ul class="media-list">
-            <% @photo.comments.each do |comment| %>
-            <li class="media">
-              <div class="media-body">
-                <h6 class="media-heading"><a href="/users/<%= comment.user_id %>"><%= comment.user.username%> </a><small><%= time_ago_in_words(comment.created_at)%> ago</small>
+            <% if Like.find_by(photo_id: @photo.id, user_id: current_user.id).nil? %>
+            <form action="/create_like" method="post">
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-                </h6>
-                <%= comment.body %>
+              <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
+
+              <input type="hidden" id="photo_id" name="photo_id" placeholder="Photo" class="form-control" value="<%= @photo.id %>">
+
+              <button class = "btn btn-link">
+                <i class = "fa fa-heart-o"></i></button>
+                <% usernames = [] %>
+                <% @photo.likes.each do |like| %>
+                <% usernames.push(like.user.username) %>
+                <% end %>
+                <% if  usernames.count == 1%>
+                <%= usernames.to_sentence %> likes this
+                <% elsif usernames.count == 0 %>
+                <small class = "text-muted">be the first to like this</small>
+                <% else  %>
+                <%= usernames.to_sentence %> like this
+                <% end %>
+              </form>
+              <% else %>
+              <a href = "/delete_like/<%= @photo.likes.find_by(user_id: current_user.id).id %>"><i class = "fa fa-heart"></i></a>
+              <% usernames = [] %>
+              <% @photo.likes.each do |like| %>
+              <% usernames.push(like.user.username) %>
+              <% end %>
+              <% if  usernames.count == 1%>
+              <%= usernames.to_sentence %> likes this
+              <% elsif usernames.count == 0 %>
+              <small class = "text-muted">be the first to like this</small>
+              <% else  %>
+              <%= usernames.to_sentence %> like this
+              <% end %>
+              <% end %>
+            </p>
+            <ul class="media-list">
+              <% @photo.comments.each do |comment| %>
+              <li class="media">
+                <div class="media-body">
+                  <h6 class="media-heading"><a href="/users/<%= comment.user_id %>"><%= comment.user.username%> </a><small><%= time_ago_in_words(comment.created_at)%> ago</small>
+
+                  </h6>
+                  <%= comment.body %>
+                </div>
+              </li>
+              <% end %>
+            </ul>
+            <form action="/create_comment" method="post">
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+              <input type="hidden" id="photo_id" name="photo_id" placeholder="Photo" class="form-control" value="<%= @photo.id %>">
+
+              <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @photo.user_id %>">
+
+              <!-- Label and input for body -->
+              <div class="form-group">
+                <label for="body" class="sr-only">
+                  Body
+                </label>
+
+                <input type = "text" id="body" name="body" placeholder="Add a comment..." class="form-control" required>
               </div>
-            </li>
-            <% end %>
-          </ul>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class ="col-md-8 col-md-offset-2">
-    <div class="btn-group btn-group-justified">
-      <a href="/photos" class="btn btn-primary">
-        Back
-      </a>
-      <% if current_user.id == @photo.user_id %>
-      <a href="/photos/<%= @photo.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_photo/<%= @photo.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
-      </a>
-      <% end %>
+    <div class ="col-md-8 col-md-offset-2">
+      <div class="btn-group btn-group-justified">
+        <a href="/photos" class="btn btn-primary">
+          Back
+        </a>
+        <% if current_user.id == @photo.user_id %>
+        <a href="/photos/<%= @photo.id %>/edit" class="btn btn-warning">
+          Edit
+        </a>
+        <a href="/delete_photo/<%= @photo.id %>" class="btn btn-danger" rel="nofollow">
+          Delete
+        </a>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
 </div>
