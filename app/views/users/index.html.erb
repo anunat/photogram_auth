@@ -9,7 +9,7 @@
         <ul class = "list-group">
           <% @users.each do |user| %>
           <li class = "list-group-item">
-            <a href = "/users/<%= user.id %>"><%= user.username.capitalize %></a></li>
+            <a href = "/users/<%= user.id %>"><%= user.username %></a></li>
             <% end %>
           </ul>
         </div>

@@ -8,7 +8,7 @@
       <div class = "panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <a href = "/users/<%= photo.user_id %>"><%= photo.user.username.capitalize %></a><small> <%= time_ago_in_words(photo.created_at)%> ago</small></h3>
+            <a href = "/users/<%= photo.user_id %>"><%= photo.user.username %></a><small> <%= time_ago_in_words(photo.created_at)%> ago</small></h3>
           </div>
           <div class = "panel-body">
             <a href = "/photos/<%= photo.id %>"><img src = "<%= photo.image %>" class = "img-responsive"></a>

@@ -3,8 +3,15 @@
   <div class = "row">
     <div class ="col-md-8 col-md-offset-2">
       <div class="jumbotron">
-        <h3><%= @user.username.capitalize %></h3>
+        <h3><%= @user.username %></h3>
       </div>
+    </div>
+  </div>
+
+  <div class = "row">
+    <div class ="col-md-8 col-md-offset-2">
+      <a href="/photos/new" class="btn btn-default btn-block"><i class = "fa fa-plus"></i></a>
+      <hr>
     </div>
   </div>
 
@@ -14,7 +21,7 @@
       <div class = "panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <a href = "/users/<%= @user.id %>"><%= @user.username.capitalize %></a></h3>
+            <a href = "/users/<%= @user.id %>"><%= @user.username %></a></h3>
           </div>
           <div class = "panel-body">
             <a href = "/photos/<%= photo.id %>"><img src = "<%= photo.image %>" class = "img-responsive"></a>
