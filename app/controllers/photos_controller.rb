@@ -23,7 +23,7 @@ class PhotosController < ApplicationController
     @photo.user_id = params[:user_id]
 
     if @photo.save
-      redirect_to "/photos", :notice => "Photo created successfully."
+      redirect_to :back, :notice => "Photo created successfully."
     else
       render 'new'
     end
@@ -41,7 +41,7 @@ class PhotosController < ApplicationController
     @photo.user_id = params[:user_id]
 
     if @photo.save
-      redirect_to "/photos", :notice => "Photo updated successfully."
+      render 'show', :notice => "Photo updated successfully."
     else
       render 'edit'
     end
